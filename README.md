@@ -4,6 +4,8 @@ _Bem-vindo à sua própria Pokédex interativa!_
 
 Aqui, você pode explorar e conhecer todos os seus Pokémons favoritos da **primeira geração** (até o número 151)! Este projeto traz uma interface intuitiva para visualização dos Pokémons, diretamente da PokéAPI.
 
+Você pode acessar a Pokédex interativa [aqui](https://nivaldo-nilngn.github.io/pokedex/).
+
 ## 🚀 Funcionalidades
 
 - 🔍 **Exibição detalhada** dos Pokémons (imagem, número e tipos).
