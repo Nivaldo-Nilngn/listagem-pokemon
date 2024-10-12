@@ -95,3 +95,4 @@ Essa função converte os detalhes de cada Pokémon em um item de lista `<li>` c
 ## 🤝 Contribuições
 
 Contribuições são muito bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests para melhorar este projeto.
+

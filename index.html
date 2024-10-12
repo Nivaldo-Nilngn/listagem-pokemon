@@ -20,6 +20,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./assets/css/global.css">
     <link rel="stylesheet" href="./assets/css/pokedex.css">
+
 </head>
 
 <body>
@@ -40,6 +41,40 @@
             </nav>
         </section>
     </main>
+    <!-- Modal para mostrar informações do Pokémon -->
+    <div id="pokemonModal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <div class="pokemon-header">
+                <div class="modal-background"></div>
+                <img id="modalPokemonImage" src="" alt="Imagem do Pokémon" aria-describedby="modalPokemonName">
+                <h2 id="modalPokemonName"></h2>
+                <span id="modalPokemonNumber"></span>
+                <p id="modalPokemonDescription"></p>
+            </div>
+            <div class="pokemon-types">
+                <span id="modalPokemonType1" class="type"></span>
+                <span id="modalPokemonType2" class="type"></span>
+            </div>
+            <div class="pokemon-details">
+                <div class="pokemon-stats">
+                    <p><strong>Peso:</strong> <span id="modalPokemonWeight"></span> kg</p>
+                    <p><strong>Altura:</strong> <span id="modalPokemonHeight"></span> m</p>
+                </div>
+                <div class="pokemon-ability">
+                    <p><strong>Habilidade:</strong> <span id="modalPokemonAbility"></span></p>
+                </div>
+            </div>
+            <div class="pokemon-weaknesses">
+                <h3>Fraquezas</h3>
+                <span class="weakness" id="weaknesses"></span>
+            </div>
+            <div class="pokemon-evolutions">
+                <h3>Evoluções</h3>
+                <div id="evolutionChain"></div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Custom JS -->
     <script src="./assets/js/pokemon-model.js"></script>

@@ -1,28 +1,33 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
 /* Lista de Pokémons */
 .pokemons {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
-    margin: 0;
     padding: 0;
     list-style: none;
 }
 
 @media screen and (min-width: 380px) {
     .pokemons {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media screen and (min-width: 576px) {
     .pokemons {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media screen and (min-width: 992px) {
     .pokemons {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
@@ -60,8 +65,6 @@
 
 .pokemon .detail {
     display: flex;
-    flex-direction: row;
-    align-items: center;
     justify-content: space-between;
 }
 
@@ -78,7 +81,6 @@
     font-size: 0.75rem;
     border-radius: 1rem;
     filter: brightness(1.1);
-    text-align: center;
 }
 
 .pokemon .detail img {
@@ -134,4 +136,191 @@
 .pagination button:hover {
     background-color: #5b66c5;
     transform: scale(1.05);
+}
+
+
+
+
+
+
+
+
+
+
+
+.modal {
+    display: none; /* Inicialmente escondido */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Fundo escuro com transparência */
+    z-index: 1000; /* Garantir que a modal fique acima de outros conteúdos */
+}
+
+.modal-content {
+    position: relative;
+    z-index: 1; /* Fica acima da imagem de fundo */
+    margin: 10% auto; /* Centraliza a modal */
+    padding: 20px;
+    background-color: white; /* Cor de fundo para o conteúdo da modal */
+    border-radius: 8px;
+    width: 80%; /* Largura da modal */
+    max-width: 500px; /* Largura máxima */
+}
+
+.modal-background {
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: auto;
+    top: -40px;
+    width: 204px;
+    height: 204px;
+}
+
+
+#modalPokemonImage {
+    width: 150px; /* Ajuste o tamanho da imagem do Pokémon */
+    height: auto; /* Mantém a proporção da imagem */
+    z-index: 1; /* Certifica-se de que a imagem do Pokémon fica acima da imagem de fundo */
+    position: relative; /* Permite o uso de z-index */
+}
+
+/* Modal Container */
+#pokemonModal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Pokémon Header */
+.pokemon-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.pokemon-header img {
+    max-width: 150px;
+    /* border-radius: 50%; */
+}
+
+.pokemon-header h2 {
+    margin: 10px 0;
+    font-size: 24px;
+}
+
+.pokemon-header #modalPokemonNumber {
+    font-size: 18px;
+    color: #666;
+}
+
+/* Pokémon Types */
+.pokemon-types {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.pokemon-types .type {
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin: 0 5px;
+    font-size: 14px;
+    color: #fff;
+    text-transform: capitalize;
+}
+
+/* Type colors */
+.pokemon-types .type.grass { background-color: #78c850; }
+.pokemon-types .type.poison { background-color: #a040a0; }
+.pokemon-types .type.fire { background-color: #f08030; }
+.pokemon-types .type.water { background-color: #6890f0; }
+.pokemon-types .type.electric { background-color: #f8d030; }
+.pokemon-types .type.ice { background-color: #98d8d8; }
+.pokemon-types .type.fighting { background-color: #c03028; }
+
+/* Pokémon Details */
+.pokemon-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+.type-icon {
+    width: 20px; /* Ajuste o tamanho conforme necessário */
+    height: 20px; /* Ajuste o tamanho conforme necessário */
+    margin-right: 5px; /* Espaço entre o ícone e o texto */
+    vertical-align: middle; /* Alinhar verticalmente */
+}
+.pokemon-details div {
+    flex: 1;
+}
+
+.pokemon-weaknesses {
+    margin-top: 20px;
+}
+
+.pokemon-weaknesses h3 {
+    font-size: 16px;
+    color: #666;
+}
+
+.pokemon-weaknesses .weakness {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    background-color: #f44;
+    color: #fff;
+    font-size: 14px;
+}
+
+/* Pokémon Evolution */
+.pokemon-evolutions {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+}
+
+.pokemon-evolutions h3 {
+    font-size: 16px;
+    color: #333;
+}
+
+.evolution-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.evolution-item img {
+    width: 50px;
+    height: 50px;
+}
+
+.evolution-item p {
+    margin: 0 10px;
+    font-size: 14px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
