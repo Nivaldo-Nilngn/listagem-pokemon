@@ -2,7 +2,7 @@
 
 _Bem-vindo à sua própria Pokédex interativa!_
 
-Aqui, você pode explorar e conhecer todos os seus Pokémons (até o número 1025)! Este projeto traz uma interface intuitiva para visualização dos Pokémons, diretamente da PokéAPI.
+Aqui, você pode explorar e conhecer todos os seus Pokémons (até o número 649)! Este projeto traz uma interface intuitiva para visualização dos Pokémons, diretamente da PokéAPI.
 
 Você pode acessar a Pokédex interativa [aqui](https://nivaldo-nilngn.github.io/pokedex/).
 
