@@ -259,10 +259,11 @@ body {
     padding-top: 15px;
 }
 .type-icon {
-    width: 20px; /* Ajuste o tamanho conforme necessário */
-    height: 20px; /* Ajuste o tamanho conforme necessário */
+    width: 15px; /* Ajuste o tamanho conforme necessário */
+    height: 15px; /* Ajuste o tamanho conforme necessário */
     margin-right: 5px; /* Espaço entre o ícone e o texto */
     vertical-align: middle; /* Alinhar verticalmente */
+    filter: brightness(0) invert(1);
 }
 .pokemon-details div {
     flex: 1;

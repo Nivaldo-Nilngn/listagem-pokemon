@@ -20,7 +20,7 @@ function convertPokemonToLi(pokemon) {
     `;
 
     liElement.addEventListener('click', () => {
-        showPokemonDetails(pokemon.number); // Call showPokemonDetails with the Pokémon's number
+        showPokemonDetails(pokemon.number);
     });
 
     return liElement;
@@ -29,7 +29,6 @@ function convertPokemonToLi(pokemon) {
 
 function loadPokemonItens(offset, limit) {
     pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
-        console.log(pokemons); // Verifique a estrutura dos dados retornados
         pokemons.forEach(pokemon => {
             const liElement = convertPokemonToLi(pokemon);
             pokemonList.appendChild(liElement);
@@ -102,7 +101,6 @@ function showPokemonDetails(pokemonNumber) {
             const modalElement = document.getElementById('pokemonModal');
             const backgroundElement = document.querySelector('.modal-background');
 
-            // Remover classes antigas de fundo
             const typeClasses = [
                 'grass-type', 'fire-type', 'water-type', 'bug-type',
                 'electric-type', 'psychic-type', 'ice-type', 'dragon-type',
@@ -112,24 +110,16 @@ function showPokemonDetails(pokemonNumber) {
 
             typeClasses.forEach(typeClass => modalElement.classList.remove(typeClass));
 
-            // Definir o tipo principal e secundário (se houver)
-            const primaryType = pokemonTypes[0]; // Tipo primário
-            const secondaryType = pokemonTypes[1]; // Tipo secundário (se existir)
+            let backgroundImage;
 
-            // Adicionar a classe do tipo principal
-            modalElement.classList.add(`${primaryType}-type`);
-
-            // Atualizar a imagem de fundo baseado no tipo secundário ou no primário
-            if (secondaryType) {
-                // Se existir um segundo tipo, usar a imagem do segundo tipo
-                backgroundElement.style.backgroundImage = `url(${pokemonImages[secondaryType]})`;
+            if (pokemonTypes[0] === 'normal' && pokemonTypes[1]) {
+                backgroundImage = pokemonImages[pokemonTypes[1]];
             } else {
-                // Se não houver segundo tipo, usar a imagem do primeiro tipo ou a imagem padrão
-                const backgroundImage = pokemonImages[primaryType] || pokemonImages.normal;
-                backgroundElement.style.backgroundImage = `url(${backgroundImage})`;
+                backgroundImage = pokemonImages[pokemonTypes[0]];
             }
 
-            // Preencher detalhes do Pokémon
+            backgroundElement.style.backgroundImage = `url(${backgroundImage})`;
+
             document.getElementById('modalPokemonName').textContent = data.name.charAt(0).toUpperCase() + data.name.slice(1);
             document.getElementById('modalPokemonNumber').textContent = `Nº${data.id}`;
             document.getElementById('modalPokemonWeight').textContent = (data.weight / 10).toFixed(1);
@@ -137,31 +127,36 @@ function showPokemonDetails(pokemonNumber) {
             document.getElementById('modalPokemonAbility').textContent = data.abilities.map(ability => ability.ability.name).join(', ');
             document.getElementById('modalPokemonImage').src = data.sprites.other['official-artwork'].front_default;
 
-            // Exibir os tipos
             const type1Element = document.getElementById('modalPokemonType1');
             const type2Element = document.getElementById('modalPokemonType2');
-
-            // Limpar o conteúdo anterior
+           
             type1Element.innerHTML = '';
             type2Element.innerHTML = '';
-
-            // Adicionar tipo 1
-            if (primaryType) {
-                const type1Icon = `<img src="${pokemonImages[primaryType]}" alt="${primaryType} type" class="type-icon">`;
-                type1Element.innerHTML = `${type1Icon} ${primaryType.charAt(0).toUpperCase() + primaryType.slice(1)}`;
-                type1Element.className = `type ${primaryType}`;
+            
+            type2Element.style.display = 'block';
+            
+            if (pokemonTypes[0]) {
+              const type1Icon = `<img src="${pokemonImages[pokemonTypes[0]]}" alt="${pokemonTypes[0]} type" class="type-icon">`;
+              type1Element.innerHTML = `${type1Icon} ${pokemonTypes[0].charAt(0).toUpperCase() + pokemonTypes[0].slice(1)}`;
+              type1Element.className = `type ${pokemonTypes[0]}`;
+            }
+            
+            if (pokemonTypes.length > 1 && pokemonTypes[1]) {
+              const type2Icon = `<img src="${pokemonImages[pokemonTypes[1]]}" alt="${pokemonTypes[1]} type" class="type-icon">`;
+              type2Element.innerHTML = `${type2Icon} ${pokemonTypes[1].charAt(0).toUpperCase() + pokemonTypes[1].slice(1)}`;
+              type2Element.className = `type ${pokemonTypes[1]}`;
+            } else {
+              type2Element.style.display = 'none';
             }
 
-            // Adicionar tipo 2, se existir
-            if (secondaryType) {
-                const type2Icon = `<img src="${pokemonImages[secondaryType]}" alt="${secondaryType} type" class="type-icon">`;
-                type2Element.innerHTML = `${type2Icon} ${secondaryType.charAt(0).toUpperCase() + secondaryType.slice(1)}`;
-                type2Element.className = `type ${secondaryType}`;
+            if (pokemonTypes[1]) {
+                const type2Icon = `<img src="${pokemonImages[pokemonTypes[1]]}" alt="${pokemonTypes[1]} type" class="type-icon">`;
+                type2Element.innerHTML = `${type2Icon} ${pokemonTypes[1].charAt(0).toUpperCase() + pokemonTypes[1].slice(1)}`;
+                type2Element.className = `type ${pokemonTypes[1]}`;
             } else {
                 type2Element.innerHTML = '';
             }
 
-            // Obter fraquezas e exibi-las
             const weaknesses = getWeaknesses(pokemonTypes);
             const weaknessesContainer = document.querySelector('.pokemon-weaknesses');
             weaknessesContainer.innerHTML = '';
@@ -172,10 +167,7 @@ function showPokemonDetails(pokemonNumber) {
                 weaknessesContainer.innerHTML += '<h3>Fraquezas</h3><span>Nenhuma fraqueza conhecida</span>';
             }
 
-            // Carregar a cadeia de evolução
             loadEvolutionChain(data.species.url);
-
-            // Mostrar a modal
             modalElement.style.display = 'block';
         })
         .catch(error => {
@@ -189,10 +181,7 @@ function loadEvolutionChain(speciesUrl) {
     fetch(speciesUrl)
         .then(response => response.json())
         .then(speciesData => {
-            // Verifique a estrutura de speciesData
-            console.log('Species Data:', speciesData);
 
-            // Checar se a URL da cadeia de evolução existe
             if (speciesData.evolution_chain && speciesData.evolution_chain.url) {
                 return fetch(speciesData.evolution_chain.url);
             } else {
@@ -201,23 +190,17 @@ function loadEvolutionChain(speciesUrl) {
         })
         .then(response => response.json())
         .then(evolutionData => {
-            // Verifique a estrutura da evolutionData
-            console.log('Evolution Data:', evolutionData);
             
             const evolutionChain = document.getElementById('evolutionChain');
-            evolutionChain.innerHTML = ''; // Limpa a cadeia anterior
-
-            // Função para percorrer a cadeia de evolução
+            evolutionChain.innerHTML = '';
             let evolution = evolutionData.chain;
 
             while (evolution) {
-                // Verifique se a propriedade species existe
                 const pokemonSpecies = evolution.species;
                 if (pokemonSpecies) {
                     const pokemonName = pokemonSpecies.name;
                     const pokemonId = pokemonSpecies.url.split('/').slice(-2, -1)[0];
-
-                    // Criar o elemento de evolução
+                    
                     const evolutionItem = document.createElement('div');
                     evolutionItem.classList.add('evolution-item');
                     evolutionItem.innerHTML = `
@@ -226,13 +209,11 @@ function loadEvolutionChain(speciesUrl) {
                         ${evolution.evolves_to.length > 0 ? `<p>Nível ${evolution.evolves_to[0].evolution_details[0]?.min_level || 'Desconhecido'}</p>` : ''}
                     `;
 
-                    // Adicionar ao contêiner de evolução
                     evolutionChain.appendChild(evolutionItem);
                 } else {
                     console.warn('Pokemon species não encontrado na evolução:', evolution);
                 }
 
-                // Avançar para a próxima evolução
                 evolution = evolution.evolves_to[0];
             }
         })
@@ -240,8 +221,6 @@ function loadEvolutionChain(speciesUrl) {
             console.error('Erro ao obter a cadeia de evolução:', error);
         });
 }
-
-
 
 loadPokemonItens(offset, limit);
 
